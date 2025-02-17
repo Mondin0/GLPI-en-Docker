@@ -6,8 +6,8 @@ rm install.php
 ```
 ## Para reemplazar logo_login_glpi.png y el logo principal una vez logueado
 ```bash
-docker cp /home/gabriel/Documentos/Practicas/Practica_GLPI/login_logo_glpi.png practica_glpi-glpi-1:/var/www/html/glpi/pics/
-docker cp /home/gabriel/Documentos/Practicas/Practica_GLPI/logo_chico.jpeg practica_glpi-glpi-1:/var/www/html/glpi/pics/
+docker cp /home/gabriel/Documentos/Practicas/Practica_GLPI/login_logo_glpi.png NombreContenedor:/var/www/html/glpi/pics/
+docker cp /home/gabriel/Documentos/Practicas/Practica_GLPI/logo_chico.jpeg NombreContenedor:/var/www/html/glpi/pics/
 ```
 
 Para reiniciar el servicio de apache:
