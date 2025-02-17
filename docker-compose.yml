@@ -1,0 +1,39 @@
+services:
+  db:
+    image: mariadb:latest
+    container_name: glpi_db
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"  # Contraseña para el usuario root de MariaDB
+      MYSQL_DATABASE: "glpidb"      # Base de datos que se creará automáticamente
+      MYSQL_USER: "glpi"            # Nombre del usuario que se creará
+      MYSQL_PASSWORD: "glpi"         # Contraseña para el usuario 'glpi'
+    ports:                         # Solo para desarrollo, expone el puerto
+      - "3306:3306"
+    volumes:
+      - glpi_db_data:/var/lib/mysql  # Persistencia de datos de la base de datos
+    restart: unless-stopped          # Reinicia el contenedor a menos que se detenga manualmente
+
+  glpi:
+    build:
+      context: .                     # Contexto para construir la imagen (directorio actual)
+    ports:
+      - "8080:80"                    # Expone el puerto 80 del contenedor en el puerto 8080 del host
+      - "8443:443"                   # Expone el puerto 443 del contenedor en el puerto 8443 del host
+    environment:
+      MYSQL_HOST: glpi_db           # Nombre del servicio de la base de datos
+      MYSQL_ROOT_PASSWORD: "root"    # Contraseña del root de MariaDB (puedes usar la misma)
+      GLPI_DB_PASSWORD: "glpi"       # Contraseña para el usuario 'glpi'
+      GLPI_DB_USER: "glpi"           # Nombre del usuario que se conectará a la base de datos
+      GLPI_DB_NAME: "glpidb"         # Nombre de la base de datos a la que GLPI se conectará
+      TIMEZONE: "America/Argentina/Buenos_Aires"  # Configuración de zona horaria
+    volumes:
+      - glpi_data:/var/www/html      # Persistencia de datos de GLPI
+      - /etc/timezone:/etc/timezone:ro  # Monta el archivo de zona horaria (solo lectura)
+      - /etc/localtime:/etc/localtime:ro  # Monta el archivo de tiempo local (solo lectura)
+    depends_on:
+      - db                            # Asegura que la base de datos se inicie antes que GLPI
+    restart: unless-stopped          # Reinicia el contenedor a menos que se detenga manualmente
+
+volumes:
+  glpi_data:                        # Volumen para los datos de GLPI
+  glpi_db_data:                     # Volumen para los datos de MariaDB
