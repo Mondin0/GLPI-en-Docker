@@ -1,6 +1,6 @@
 # GLPI Docker Setup 🐋
 
-Sistema de Gestión de Servicios IT (ITSM) y Mesa de Ayuda desplegado con Docker. Esta configuración incluye GLPI 10.0.18 con MariaDB, configurado para un entorno de producción seguro.
+Sistema de Gestión de Servicios IT (ITSM) y Mesa de Ayuda desplegado con Docker. Esta configuración incluye [GLPI 10.0.18](https://hub.docker.com/r/elestio/glpi) de [Elestio](https://elest.io/) con MariaDB, configurado para un entorno de producción seguro.
 
 ## 📋 Índice
 
